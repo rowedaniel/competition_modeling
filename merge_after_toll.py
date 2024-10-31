@@ -23,7 +23,7 @@ def draw_heatmap(collisions, lanes):
   lane_ends_x = [d for lane in lanes for d,s in enumerate(lane) if s == "x"]
   lane_ends_y = [l for l,lane in enumerate(lanes) for s in lane if s == "x"]
 
-  plt.rcParams['figure.figsize'] = (20, 20)
+  # plt.rcParams['figure.figsize'] = (20, 20)
   fig, ax = plt.subplots()
   im = ax.imshow(collisions)
 
@@ -34,7 +34,7 @@ def draw_heatmap(collisions, lanes):
                         ha="center", va="center", color="w")
 
   # put dots over spaces where lane has ended
-  ax.plot(lane_ends_x, lane_ends_y, 'p', markersize=40)
+  ax.plot(lane_ends_x, lane_ends_y, 'p', markersize=10)
 
   ax.set_title("Collision heatmap")
   ax.figure.colorbar(im, ax=ax, location="bottom", orientation="horizontal")
@@ -167,7 +167,7 @@ def model_trapezoid(
               ] for lane in lanes
                ],
                        lanes)
-          plt.plot([new_l], [new_d], '.', markersize=60)
+          plt.plot([new_l], [new_d], '.', markersize=30)
           plt.title("before")
 
           draw_heatmap(
@@ -175,7 +175,7 @@ def model_trapezoid(
               ] for lane in next_lanes
                ],
                        lanes)
-          plt.plot([new_l], [new_d], '.', markersize=60)
+          plt.plot([new_l], [new_d], '.', markersize=30)
           plt.title("after")
           print(generate_driver_sight(lanes, l, d))
           print(direction)
