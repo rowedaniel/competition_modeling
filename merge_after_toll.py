@@ -17,6 +17,31 @@ import time
 Here, we model cars as individual actors in a discrete roadway
 """
 
+def draw_heatmap(collisions, lanes):
+
+  collisions = np.array(collisions)
+  lane_ends_x = [d for lane in lanes for d,s in enumerate(lane) if s == "x"]
+  lane_ends_y = [l for l,lane in enumerate(lanes) for s in lane if s == "x"]
+
+  plt.rcParams['figure.figsize'] = (20, 20)
+  fig, ax = plt.subplots()
+  im = ax.imshow(collisions)
+
+  # Loop over data dimensions and create text annotations.
+  for i in range(collisions.shape[0]):
+      for j in range(collisions.shape[1]):
+          text = ax.text(j, i, round(collisions[i, j]),
+                        ha="center", va="center", color="w")
+
+  # put dots over spaces where lane has ended
+  ax.plot(lane_ends_x, lane_ends_y, 'p', markersize=40)
+
+  ax.set_title("Collision heatmap")
+  ax.figure.colorbar(im, ax=ax, location="bottom", orientation="horizontal")
+  fig.tight_layout()
+  #plt.show()
+
+
 class Driver:
   def __eq__(self, other):
     return other == 'c'
@@ -61,7 +86,7 @@ class Driver2(Driver):
   possible_checks = [6,5,4,3]
   def algorithm(self, sight):
     checks = possible_checks[speed]
-    if
+  
 
 def generate_driver_sight(lanes, l, d):
   def space_or_none(lprime, dprime):
@@ -154,6 +179,7 @@ def model_trapezoid(
           plt.title("after")
           print(generate_driver_sight(lanes, l, d))
           print(direction)
+          plt.show()
 
           return
 
@@ -180,32 +206,9 @@ def model_trapezoid(
   return lane_collisions, lanes
 
 t1 = time.time()
-collisions, lanes = model_trapezoid(6, 2, 20, 5, simple_driver_algorithm, [0.01, 0.1, 0.1, 0.5, 0.8, 0.6], 10000, lane_length=25)
+collisions, lanes = model_trapezoid(6, 2, 20, 5, SimpleDriver, [0.01, 0.1, 0.1, 0.5, 0.8, 0.6], 10000, lane_length=25)
 print("time taken:", time.time() - t1)
 
-def draw_heatmap(collisions, lanes):
-
-  collisions = np.array(collisions)
-  lane_ends_x = [d for lane in lanes for d,s in enumerate(lane) if s == "x"]
-  lane_ends_y = [l for l,lane in enumerate(lanes) for s in lane if s == "x"]
-
-  plt.rcParams['figure.figsize'] = (20, 20)
-  fig, ax = plt.subplots()
-  im = ax.imshow(collisions)
-
-  # Loop over data dimensions and create text annotations.
-  for i in range(collisions.shape[0]):
-      for j in range(collisions.shape[1]):
-          text = ax.text(j, i, round(collisions[i, j]),
-                        ha="center", va="center", color="w")
-
-  # put dots over spaces where lane has ended
-  ax.plot(lane_ends_x, lane_ends_y, 'p', markersize=40)
-
-  ax.set_title("Collision heatmap")
-  ax.figure.colorbar(im, ax=ax, location="bottom", orientation="horizontal")
-  fig.tight_layout()
-  #plt.show()
 
 draw_heatmap(collisions, lanes)
 
