@@ -82,7 +82,7 @@ class Driver2(Driver):
   2-> 30mph
   3-> 60mph
   """
-  speed = 1
+  speed = 2
   possible_checks = [6,5,4,3]
   def algorithm(self, sight):
     checks = possible_checks[speed]
@@ -179,6 +179,7 @@ def model_trapezoid(
           plt.title("after")
           print(generate_driver_sight(lanes, l, d))
           print(direction)
+          plt.show
           plt.show()
 
           return
