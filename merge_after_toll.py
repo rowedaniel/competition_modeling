@@ -167,7 +167,7 @@ def model_trapezoid(
               ] for lane in lanes
                ],
                        lanes)
-          plt.plot([new_l], [new_d], '.', markersize=30)
+          plt.plot([new_d], [new_l], '.', markersize=30)
           plt.title("before")
 
           draw_heatmap(
@@ -175,10 +175,11 @@ def model_trapezoid(
               ] for lane in next_lanes
                ],
                        lanes)
-          plt.plot([new_l], [new_d], '.', markersize=30)
+          plt.plot([new_d], [new_l], '.', markersize=30)
           plt.title("after")
           print(generate_driver_sight(lanes, l, d))
           print(direction)
+          print(new_l, new_d)
           plt.show
           plt.show()
 
